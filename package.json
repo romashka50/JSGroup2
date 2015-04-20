@@ -1,0 +1,12 @@
+{
+  "name": "jsgroup2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "romashjka50",
+  "license": "MIT"
+}
