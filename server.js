@@ -9,9 +9,7 @@ process.env.NODE_ENV = 'production';
 
 function chackIt(req, res, next) {
     console.log('we are the best');
-    var err = new Error('Bad request in get Method');
-    err.status = 403;
-    next(err);
+    next();
 };
 
 function errHandler(err, req, res, next) {
@@ -28,24 +26,16 @@ function errHandler(err, req, res, next) {
     console.log();
 };
 
-//app.use(function (req, res, next) {
-//    var ip = req.ip;
-//    console.log(ip);
-//    if (!/::|l27.0/.test(ip)) {
-//        return next();
-//    }
-//    var err = new Error();
-//    err.status = 404;
-//    next(err);
-//});
-app.set('pupkin', {a: 2});
-app.get('/:hero/:x/:y', function (req, res, next) {
-    var hero = req.params.hero;
-    var x = req.params.x;
-    var y = req.params.y;
-
-    res.status(200).send(app.get('pupkin'));
-});
+/*app.use(function (req, res, next) {
+    var ip = req.ip;
+    console.log(ip);
+    if (!/::|l27.0/.test(ip)) {
+        return next();
+    }
+    var err = new Error();
+    err.status = 404;
+    next(err);
+});*/
 
 app.use(errHandler);
 
