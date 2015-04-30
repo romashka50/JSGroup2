@@ -2,26 +2,53 @@
  * Created by Roman on 20.04.2015.
  */
 var express = require('express');
-var app  = express();
-var bodyparser = require('body-parser');
+var app = express();
+process.env.NODE_ENV = 'production';
 
-app.use(bodyparser.json());
+//var bodyparser = require('body-parser');
 
-app.get('/info', function(req, res, next){
-    res.status(200).send({pupkin: 'Hello World'});
-});
+function chackIt(req, res, next) {
+    console.log('we are the best');
+    var err = new Error('Bad request in get Method');
+    err.status = 403;
+    next(err);
+};
 
-app.post('/info', function(req, res, next){
-    var body = req.body;
-
-    if(!body.key){
-        var err = new Error('Not Key');
-
-        return res.status(500).send({error: err.message + ' ' + err.stack});
+function errHandler(err, req, res, next) {
+    var status = err.status || 500;
+    var message;
+    if(process.env.NODE_ENV === 'development'){
+        message = err.message + '\n\r ' + err.stack;
+    } else {
+        message = err.message;
     }
-    res.status(200).send(body);
+    //ToDo check env production || development
+
+    res.status(status).send(message);
+    console.log();
+};
+
+//app.use(function (req, res, next) {
+//    var ip = req.ip;
+//    console.log(ip);
+//    if (!/::|l27.0/.test(ip)) {
+//        return next();
+//    }
+//    var err = new Error();
+//    err.status = 404;
+//    next(err);
+//});
+app.set('pupkin', {a: 2});
+app.get('/:hero/:x/:y', function (req, res, next) {
+    var hero = req.params.hero;
+    var x = req.params.x;
+    var y = req.params.y;
+
+    res.status(200).send(app.get('pupkin'));
 });
 
-app.listen(3030, function(){
+app.use(errHandler);
+
+app.listen(3030, function () {
     console.log('Server start on port = 3030');
 });
