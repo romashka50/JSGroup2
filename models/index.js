@@ -4,4 +4,5 @@
 
 module.exports = (function(){
     require('./user.js');
+    require('./post.js');
 })();

@@ -3,8 +3,8 @@ var app = express();
 var logger = require('morgan');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
-var userUrl = 'mongodb://localhost:27017/userDb';
-var postUrl = 'mongodb://localhost:27017/postDb';
+var userUrl = 'mongodb://localhost:27017/JSGroup2';
+//var postUrl = 'mongodb://localhost:27017/postDb';
 var async = require('async');
 
 function userConnect(callback){
@@ -16,18 +16,18 @@ function userConnect(callback){
     })
 };
 
-function postConnect(callback){
+/*function postConnect(callback){
     var postDb = mongoose.createConnection(postUrl, function(){
         callback(null, postDb);
     });
     postDb.on('error', function(err){
         callback(err);
     })
-};
+};*/
 
 var asyncObject = {
-    userDb: userConnect,
-    postDb: postConnect
+    userDb: userConnect
+    /*postDb: postConnect*/
 };
 
 async.parallel(asyncObject, function(err, result){
@@ -40,43 +40,7 @@ async.parallel(asyncObject, function(err, result){
     app.use(bodyParser.json());
 
     require('./models/index.js');
-
-    app.get('/', function (req, res, next) {
-
-        console.log('----------------------------');
-
-        res.status(200).send('qwerty');
-    });
-
-    app.post('/user', function (req, res, next) {
-        var body = req.body;
-
-        var User = mongoose.model('user');
-        var user = new User(body);
-
-        user.save(function (err, user) {
-            if (err) {
-                return res.status(500).send(err)
-            }
-
-            res.status(200).send(user);
-        });
-
-
-    });
-
-    app.get('/user', function (req, res, next) {
-
-        var User = mongoose.model('user');
-
-        User.find(function (err, users) {
-            if (err) {
-                return res.status(500).send(err)
-            }
-
-            res.status(200).send(users);
-        });
-    });
+    require('./routes/index.js')(app, result);
 
     app.listen(3030, function () {
         console.log('Server start on port = 3030');
