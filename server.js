@@ -4,9 +4,10 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var url = 'mongodb://localhost:28017/jsGroup2';
 var Bookshelf = require('bookshelf');
-var Knex = require ('knex');
+var Knex = require('knex');
 var knex;
 var PostGre;
+var User;
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -25,42 +26,34 @@ knex = Knex({
 
 PostGre = Bookshelf(knex);
 
-
-app.get('/', function (req, res, next) {
-
-    console.log('----------------------------');
-
-    res.status(200).send('qwerty');
+User = PostGre.Model.extend({
+    tableName: 'users',
+    hasTimestamps: ['created_at', 'updated_at']
 });
 
 app.post('/user', function (req, res, next) {
     var body = req.body;
-
-    var User = mongoose.model('user');
     var user = new User(body);
-
-    user.save(function (err, user) {
-        if (err) {
-            return res.status(500).send(err)
-        }
-
-        res.status(200).send(user);
-    });
+    user.save()
+        .then(function (user) {
+            res.status(200).send(user);
+        }).otherwise(function (err) {
+            res.status(500).send(err);
+        });
 
 
 });
 
 app.get('/user', function (req, res, next) {
 
-    var User = mongoose.model('user');
-
-    User.find(function (err, users) {
-        if (err) {
-            return res.status(500).send(err)
-        }
-
-        res.status(200).send(users);
-    });
+    User
+        .forge()
+        .fetchAll()
+        .then(function (users) {
+            res.status(200).send(users);
+        }).otherwise(function (err) {
+            res.status(500).send(err);
+        });
 });
 
 app.listen(3030, function () {
