@@ -15,5 +15,8 @@ module.exports = (function() {
         dateOfBirth: {type: Date, default: Date.now}//JSON
     }, {collection: 'Users'});
 
-    mongoose.model('user', UserSchema);
+    if(!mongoose.Schemas){
+        mongoose.Schemas = {};
+    }
+    mongoose.Schemas['User'] = UserSchema;
 })();
