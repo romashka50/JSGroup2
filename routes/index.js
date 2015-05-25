@@ -7,9 +7,7 @@ module.exports = function(app, dbsObject){
 
      app.get('/', function (req, res, next) {
 
-        console.log('----------------------------');
-
-        res.status(200).send('qwerty');
+       res.sendfile('index.html');
     });
 
     app.use('/user', userRouter);

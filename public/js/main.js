@@ -14,3 +14,7 @@ require.config({
         'app': ['Backbone']
     }
 });
+
+require(['app'], function(APP){
+
+});
