@@ -7,7 +7,10 @@ require.config({
     paths: {
         jQuery: './libs/jquery',
         Underscore: './libs/underscore',
-        Backbone: './libs/backbone'
+        Backbone: './libs/backbone',
+        views: './views',
+        text: './libs/text',
+        templates: '../templates'
     },
     shim: {
         'Backbone': ['Underscore', 'jQuery'],
@@ -15,6 +18,6 @@ require.config({
     }
 });
 
-require(['app'], function(APP){
-
+require(['app'], function(app){
+    app.init();
 });

@@ -1,20 +1,32 @@
 /**
  * Created by Roman on 25.05.2015.
  */
-define(['Backbone'], function(Backbone){
+define([
+    'Backbone',
+    'views/mainView'
+], function (Backbone, mainView) {
     var Router = Backbone.Router.extend({
+
+        mainView: null,
+
         routes: {
-            "index" : "index",
-            "user(/:userId)": "user",
+            "index": "index",
+            "jsGroup/:Content": "getContent",
             '*any': 'index'
         },
 
-        user: function(userId){
-            alert('usr router ' + userId);
+        getContent: function (Content) {
+            var contentViewUrl = 'views/' + Content + '/content';
+
+            require([contentViewUrl], function(contentViewUrl){
+                new contentViewUrl();
+            });
         },
 
-        index: function(){
-            alert('index router');
+        index: function () {
+            if (!this.mainView) {
+                this.mainView = new mainView();
+            }
         }
     });
 
