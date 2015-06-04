@@ -8,6 +8,7 @@ define([
     var Router = Backbone.Router.extend({
 
         mainView: null,
+        contentView: null,
 
         routes: {
             "index": "index",
@@ -17,9 +18,14 @@ define([
 
         getContent: function (Content) {
             var contentViewUrl = 'views/' + Content + '/content';
+            var self = this;
 
             require([contentViewUrl], function(contentViewUrl){
-                new contentViewUrl();
+                if(self.contentView){
+                    self.contentView.undelegateEvents();
+                }
+
+                self.contentView = new contentViewUrl();
             });
         },
 

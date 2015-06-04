@@ -6,13 +6,12 @@ var mongoose = require('mongoose');
 module.exports = (function() {
     var Schema = mongoose.Schema;
     var UserSchema = new Schema({
+        _id: Number,
         name: {
             first: {type: String, required: true},
             last: {type: String, default: 'Pupkin'}
         },
-        phoneNumber: Number,
-        isMan: Boolean,
-        dateOfBirth: {type: Date, default: Date.now}//JSON
+        age: Number
     }, {collection: 'Users'});
 
     if(!mongoose.Schemas){

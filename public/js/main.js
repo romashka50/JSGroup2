@@ -9,6 +9,8 @@ require.config({
         Underscore: './libs/underscore',
         Backbone: './libs/backbone',
         views: './views',
+        models: './models',
+        collections: './collections',
         text: './libs/text',
         templates: '../templates'
     },

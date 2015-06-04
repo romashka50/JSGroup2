@@ -21,9 +21,25 @@ module.exports = function(db){
 
     userRouter.post('/', function(req, res, next){
         var body = req.body;
+        var d = new Date();
+
+        body._id = d.valueOf();
+
         var user = new UserMode(body);
 
         user.save(function(err, user){
+            if(err){
+                return next(err);
+            }
+
+            res.status(200).send(user);
+        });
+    });
+
+    userRouter.delete('/:id', function(req, res, next){
+        var id = req.params.id;
+
+        UserMode.remove({_id: id}, function(err, user){
             if(err){
                 return next(err);
             }

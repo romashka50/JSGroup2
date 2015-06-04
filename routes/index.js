@@ -1,9 +1,9 @@
 /**
  * Created by user on 5/18/15.
  */
-module.exports = function(app, dbsObject){
-    var userRouter = require('./user.js')(dbsObject.userDb);
-    var postRouter = require('./post.js')(dbsObject.userDb);
+module.exports = function(app, db){
+    var userRouter = require('./user.js')(db);
+    var postRouter = require('./post.js')(db);
 
      app.get('/', function (req, res, next) {
 
