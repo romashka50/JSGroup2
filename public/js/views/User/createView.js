@@ -52,9 +52,33 @@ define([
         render: function () {
             var templateHtml = this.template();
 
+            $.extend($.ui.dialog.prototype.options, {
+                modal: true,
+                resizable: false,
+                draggable:true,
+                autoOpen:true,
+                width:700,
+                create: function( event, ui ) {
+                    var win = $( window );
+                    var dialog = $(event.target).parent(".ui-dialog");
+                    var top = $(document).scrollTop()+(win.height() - dialog.height()-200) / 2;
+                    var left = (win.width() - dialog.width()) / 2;
+                    dialog.css({
+                        position: "absolute",
+                        top: top,
+                        left: left
+                    });
+                }
+            });
+
             this.$el = $(templateHtml).dialog({
                 width: '900px',
-                modal: true
+                modal: true,
+                buttons: [{
+                    text: "Ok", click: function () {
+                        $(this).dialog("close");
+                    }
+                }]
             });
 
             return this;
