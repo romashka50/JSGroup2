@@ -5,13 +5,13 @@ var App = App ||  {  };
 
 require.config({
     paths: {
-        jQuery: './libs/jquery',
-        Underscore: './libs/underscore',
-        Backbone: './libs/backbone',
+        jQuery: './libs/jquery/dist/jquery',
+        Underscore: './libs/underscore/underscore',
+        Backbone: './libs/backbone/backbone',
         views: './views',
         models: './models',
         collections: './collections',
-        text: './libs/text',
+        text: './libs/text/text',
         templates: '../templates'
     },
     shim: {
