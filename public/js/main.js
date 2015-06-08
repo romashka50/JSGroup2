@@ -6,6 +6,7 @@ var App = App ||  {  };
 require.config({
     paths: {
         jQuery: './libs/jquery/dist/jquery',
+        jQueryUi: './libs/jqueryui/jquery-ui',
         Underscore: './libs/underscore/underscore',
         Backbone: './libs/backbone/backbone',
         views: './views',
@@ -15,7 +16,8 @@ require.config({
         templates: '../templates'
     },
     shim: {
-        'Backbone': ['Underscore', 'jQuery'],
+        'jQueryUi': ['jQuery'],
+        'Backbone': ['Underscore', 'jQueryUi'],
         'app': ['Backbone']
     }
 });

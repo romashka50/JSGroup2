@@ -5,6 +5,12 @@ define(['models/user'], function(UserModel){
     var Users = Backbone.Collection.extend({
         model: UserModel,
 
+        initialize: function(){
+            this.fetch({
+                reset: true
+            });
+        },
+
         url: '/user/'
     });
 

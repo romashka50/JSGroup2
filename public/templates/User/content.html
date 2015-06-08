@@ -1,18 +1,13 @@
-<span>
-    User
-</span>
-<ul>
+<div>
     <% collection.forEach(function(user){%>
-        <li>
-            <span><%= user.name.first %></span>
-            <span><%=user.name.last%></span>
-            <span><%=user.age%></span>
-        </li>
+    <li>
+        <span><%= user.name.first %></span>
+        <span><%=user.name.last%></span>
+        <span><%=user.age%></span>
+    </li>
     <button class="remove" id="<%= user._id %>">remove</button>
     <%})%>
-</ul>
-<input id="first" type="text" maxlength="10">
-<input id="last" type="text">
-<input id="age" type="text" maxlength="2">
+</div>
+<div id="createHolder">
 
-<button id="saveBtn">Save User</button>
+</div>

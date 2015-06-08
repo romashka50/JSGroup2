@@ -6,62 +6,33 @@
  */
 define([
     'text!templates/User/content.html',
-    'models/user',
     'collections/users'
-], function (content, UserModel, UserCollection) {
+], function (content, UserCollection) {
     var mainView = Backbone.View.extend({
         el: '#contentHolder',
 
         template: _.template(content),
 
         events: {
-            'click #saveBtn' : 'saveUser',
-            'click .remove' : 'removeUser'
+            'click .remove': 'removeUser'
         },
 
-        initialize: function () {
-            this.collection = new UserCollection();
-            this.collection.fetch({
-                reset: true
-            });
-            this.collection.bind('reset', this.render, this);
-    },
+        initialize: function (optins) {
+            this.collection = optins.collection;
 
-        saveUser: function(e){
-            var el = this.$el;
-            var model = new UserModel();
-            var firstName = el.find('#first').val();
-            var lastName = el.find('#last').val();
-            var age = el.find('#age').val();
-
-            var data = {
-                name: {
-                    first: firstName,
-                    last: lastName
-                },
-                age: age
-            };
-            model.save(data, {
-                success: function(model){
-                    Backbone.history.fragment = '';
-                    Backbone.history.navigate('jsGroup/User', {trigger: true});
-                },
-                error: function(err, xhr, model){
-                    alert(xhr);
-                }
-            });
+            this.render();
         },
 
-        removeUser: function(e){
+        removeUser: function (e) {
             var id = $(e.target).attr('id');
             var model = this.collection.get(id);
 
             model.destroy({
-                success: function(model){
+                success: function (model) {
                     Backbone.history.fragment = '';
                     Backbone.history.navigate('jsGroup/User', {trigger: true});
                 },
-                error: function(err, xhr, model){
+                error: function (err, xhr, model) {
                     alert(xhr);
                 }
             });

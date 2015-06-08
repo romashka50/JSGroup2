@@ -3,7 +3,8 @@
  */
 define([
     'text!templates/topBarTemplate.html',
-], function (topBarTemplate) {
+    'views/User/createView'
+], function (topBarTemplate, createView) {
     var mainView = Backbone.View.extend({
         el: '#topBar',
 
@@ -11,6 +12,7 @@ define([
 
         events: {
             "click #user": "goToUser",
+            "click #createBtn": "create",
             "click #post": "goToPost"
         },
 
@@ -36,6 +38,10 @@ define([
             hash = 'jsGroup/' + hash;
 
             Backbone.history.navigate(hash, {trigger: true});
+        },
+
+        create: function(e){
+            new createView();
         },
 
         render: function () {

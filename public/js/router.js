@@ -18,15 +18,24 @@ define([
 
         getContent: function (Content) {
             var contentViewUrl = 'views/' + Content + '/content';
+            var contentCollection = 'collections/' + Content.toLowerCase() + 's';
             var self = this;
 
-            require([contentViewUrl], function(contentViewUrl){
-                if(self.contentView){
-                    self.contentView.undelegateEvents();
-                }
+            require([contentCollection, contentViewUrl], function(Collection, contentView){
+                var collection = new Collection();
 
-                self.contentView = new contentViewUrl();
+                var f = self.changeContenView.bind(self, contentView, collection);
+
+                collection.on('reset', f, self);
             });
+        },
+
+        changeContenView: function(view, collection){
+            if(this.contentView){
+                this.contentView.undelegateEvents();
+            }
+
+            this.contentView = new view({collection: collection});
         },
 
         index: function () {
